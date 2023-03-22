@@ -1,4 +1,5 @@
 export interface IProducerProps {
+  id: string;
   cpfCnpj: string;
   producerName: string;
   farmName: string;
