@@ -66,7 +66,6 @@ const AddProducer = () => {
     watch,
     control,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<IProducerProps>({
     resolver: yupResolver(producerFormSchema),
@@ -84,7 +83,8 @@ const AddProducer = () => {
   });
 
   const submitForm: SubmitHandler<IProducerProps> = (data) => {
-    console.log(data);
+    producerFormAction(data);
+    navigate('/produtores');
   };
 
   return (
@@ -254,10 +254,6 @@ const AddProducer = () => {
             </FormHelperText>
           </FormControl>
           <Button
-            onClick={() => {
-              producerFormAction(getValues());
-              navigate('/produtores');
-            }}
             color="success"
             variant="contained"
             type="submit"
