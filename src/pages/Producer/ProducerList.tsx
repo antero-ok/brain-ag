@@ -25,7 +25,7 @@ const ProducersLayout: FC = () => {
 
   return (
     <PageContainer>
-      <Header title="Producers" />
+      <Header title="Produtores" />
 
       <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
         <NavLink style={{ textDecoration: 'none' }} to="novo" end>

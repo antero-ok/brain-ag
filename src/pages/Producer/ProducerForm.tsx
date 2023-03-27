@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   FormControl,
+  FormHelperText,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -13,6 +14,7 @@ import {
 } from '@mui/material';
 import { Form, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { IProducerProps } from '../../models/producer';
 
 import { cities, states } from 'estados-cidades';
@@ -21,6 +23,7 @@ import PageContainer from '../../components/common/PageContainer';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../global/store';
 import useProducer from '../../hooks/useProducer';
+import { producerFormSchema } from '../../utils/formValidation';
 
 const AddProducer = () => {
   const { id } = useParams();
@@ -29,7 +32,6 @@ const AddProducer = () => {
   const [disableFields, setDisableFields] = useState(false);
   const { producerFormAction } = useProducer();
   const navigate = useNavigate();
-  const all = useLocation();
 
   const getDefaultFormValue = () => {
     if (id) {
@@ -66,31 +68,37 @@ const AddProducer = () => {
     getValues,
     formState: { errors },
   } = useForm<IProducerProps>({
+    resolver: yupResolver(producerFormSchema),
     defaultValues: {
-      agroArea: null,
+      agroArea: 0,
       city: '',
       countryState: '',
       cpfCnpj: '',
       crops: [],
-      farmArea: null,
+      farmArea: 0,
       farmName: '',
-      forestArea: null,
+      forestArea: 0,
       producerName: '',
     },
   });
+
   const submitForm: SubmitHandler<IProducerProps> = (data) => {
     console.log(data);
   };
 
   return (
     <PageContainer>
-      <Header title="Novo Produtor" />
-      <Form onSubmit={handleSubmit(submitForm)}>
+      <Header title="Produtor Rural" />
+      <Form
+        onSubmit={handleSubmit(submitForm, (e) => {
+          console.log(e);
+        })}
+      >
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            rowGap: '32px',
+            rowGap: '16px',
             mt: 2,
           }}
         >
@@ -104,6 +112,8 @@ const AddProducer = () => {
               size="small"
               sx={{ flex: 1 }}
               disabled={disableFields}
+              error={!!errors.producerName}
+              helperText={errors.producerName?.message || ' '}
             />
 
             <TextField
@@ -112,20 +122,24 @@ const AddProducer = () => {
               size="small"
               sx={{ flex: 1 }}
               disabled={disableFields}
+              error={!!errors.cpfCnpj}
+              helperText={errors.cpfCnpj?.message || ' '}
             />
           </FormControl>
 
           <FormControl
-            sx={{ display: 'flex', flexDirection: 'column', rowGap: '24px' }}
+            sx={{ display: 'flex', flexDirection: 'column', rowGap: '12px' }}
           >
             <TextField
               {...register('farmName')}
               label="Nome da Fazenda"
               size="small"
               disabled={disableFields}
+              error={!!errors.farmName}
+              helperText={errors.farmName?.message || ' '}
             />
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
-              <FormControl sx={{ width: 120 }} size="small">
+              <FormControl sx={{ width: 180 }} size="small">
                 <InputLabel id="demo-simple-select-label">Estado</InputLabel>
                 <Controller
                   name="countryState"
@@ -136,6 +150,7 @@ const AddProducer = () => {
                       labelId="demo-simple-select-label"
                       label="Estado"
                       disabled={disableFields}
+                      error={!!errors.countryState}
                     >
                       {states()?.map((countryState) => {
                         return (
@@ -147,6 +162,9 @@ const AddProducer = () => {
                     </Select>
                   )}
                 />
+                <FormHelperText error={!!errors.countryState}>
+                  {errors.countryState?.message || ' '}
+                </FormHelperText>
               </FormControl>
 
               <FormControl fullWidth>
@@ -155,22 +173,24 @@ const AddProducer = () => {
                   id="combo-box-demo"
                   options={cities(watch('countryState')) || []}
                   disabled={disableFields}
-                  // a ser implementado
-                  // defaultValue={defaultValues?.city}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       {...register('city')}
                       label="Cidade"
+                      error={!!errors.city}
                     />
                   )}
                 />
+                <FormHelperText error={!!errors.city}>
+                  {errors.city?.message || ' '}
+                </FormHelperText>
               </FormControl>
             </Box>
           </FormControl>
 
           <FormControl
-            sx={{ display: 'flex', flexDirection: 'column', rowGap: '24px' }}
+            sx={{ display: 'flex', flexDirection: 'column', rowGap: '12px' }}
           >
             <TextField
               {...register('farmArea')}
@@ -178,6 +198,8 @@ const AddProducer = () => {
               size="small"
               type="number"
               disabled={disableFields}
+              error={!!errors.farmArea}
+              helperText={errors.farmArea?.message || ' '}
             />
 
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
@@ -188,6 +210,8 @@ const AddProducer = () => {
                 type="number"
                 fullWidth
                 disabled={disableFields}
+                error={!!errors.agroArea}
+                helperText={errors.agroArea?.message || ' '}
               />
               <TextField
                 {...register('forestArea')}
@@ -196,12 +220,14 @@ const AddProducer = () => {
                 type="number"
                 fullWidth
                 disabled={disableFields}
+                error={!!errors.forestArea}
+                helperText={errors.forestArea?.message || ' '}
               />
             </Box>
           </FormControl>
 
           <FormControl
-            sx={{ display: 'flex', flexDirection: 'column', rowGap: '12px' }}
+            sx={{ display: 'flex', flexDirection: 'column' }}
             size="small"
           >
             <InputLabel id="culturas">Culturas cultivadas</InputLabel>
@@ -213,6 +239,7 @@ const AddProducer = () => {
               {...register('crops')}
               value={watch('crops')}
               disabled={disableFields}
+              error={!!errors.crops}
             >
               {['arroz', 'feijao', 'soja'].map((name) => (
                 <MenuItem key={name} value={name}>
@@ -221,9 +248,15 @@ const AddProducer = () => {
                 </MenuItem>
               ))}
             </Select>
+            <FormHelperText error={!!errors.crops}>
+              {errors.crops?.message || ' '}
+            </FormHelperText>
           </FormControl>
           <Button
-            onClick={() => producerFormAction(getValues())}
+            onClick={() => {
+              producerFormAction(getValues());
+              navigate('/produtores');
+            }}
             color="success"
             variant="contained"
             type="submit"

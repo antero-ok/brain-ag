@@ -5,8 +5,8 @@ export interface IProducerProps {
   farmName: string;
   countryState: string;
   city: string;
-  farmArea: number | null;
-  agroArea: number | null;
-  forestArea: number | null;
+  farmArea: number;
+  agroArea: number;
+  forestArea: number;
   crops: Array<string>;
 }
