@@ -1,7 +1,8 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { Container, Paper } from '@mui/material';
+import { ChildrenProps } from '../../@types/generics';
 
-const AppContainer: FC<{ children: ReactNode }> = ({ children }) => {
+const AppContainer: FC<ChildrenProps> = ({ children }) => {
   return (
     <Container
       sx={{

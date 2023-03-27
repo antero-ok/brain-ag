@@ -9,7 +9,7 @@ const RootLayout = () => {
     <AppContainer>
       <SideBar />
 
-      <Box sx={{ width: 1, border: '1px dashed red' }}>
+      <Box sx={{ width: 1 }}>
         <Outlet />
       </Box>
     </AppContainer>
