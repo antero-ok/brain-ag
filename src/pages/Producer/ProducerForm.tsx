@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../global/store';
 import useProducer from '../../hooks/useProducer';
 import { producerFormSchema } from '../../utils/formValidation';
+import { CROPS } from '../../providers/cropProvider';
 
 const AddProducer = () => {
   const { id } = useParams();
@@ -241,7 +242,7 @@ const AddProducer = () => {
               disabled={disableFields}
               error={!!errors.crops}
             >
-              {['arroz', 'feijao', 'soja'].map((name) => (
+              {CROPS.map((name) => (
                 <MenuItem key={name} value={name}>
                   <Checkbox />
                   <ListItemText primary={name} />
