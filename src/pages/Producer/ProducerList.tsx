@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemText,
   TextField,
+  Typography,
 } from '@mui/material';
 import { FC } from 'react';
 import { PRODUCERS } from '../../providers/producerProvider';
@@ -41,6 +42,25 @@ const ProducersLayout: FC = () => {
         />
       </Box>
 
+      <Box
+        sx={{
+          width: 1,
+          display: 'flex',
+          justifyContent: 'space-between',
+          pl: 2,
+          pt: 2,
+        }}
+      >
+        <Typography align="left" flex={4} fontWeight="bold">
+          FAZENDA
+        </Typography>
+        <Typography align="left" flex={3} fontWeight="bold">
+          LOCAL
+        </Typography>
+        <Typography align="left" flex={2} fontWeight="bold">
+          AÇÕES
+        </Typography>
+      </Box>
       <Box sx={{ overflowY: 'auto' }}>
         <List>
           {producersList.map((producer) => {
