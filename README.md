@@ -4,7 +4,7 @@ Este é um projeto de teste que visa atender aos requisitos propostos em: https:
 
 ## Demonstração
 
-Link em breve
+Acesse o projeto [neste link](https://brain-ag.surge.sh/).
 
 ## Funcionalidades
 
