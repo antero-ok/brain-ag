@@ -16,7 +16,7 @@ Uma lista de Produtores Rurais é mantida sob gerenciamento do [Redux Toolkit](h
 
 Para rodar o projeto é necessário ter o Node.js® (projeto escrito na versão `18.15.0`) instalado.
 
-#### Caso possua Node Version Manager, execute o comando abaixo no terminal:
+#### Caso possua Node Version Manager, execute o comando abaixo no terminal a fim de selecionar Node v18.15.0:
 
 ```bash
   nvm use
